@@ -1,0 +1,11 @@
+acme_account:
+    resource: "@AccountBundle/Resources/config/routing.yml"
+    prefix:   /account
+
+acme_product:
+    resource: "@AcmeProductBundle/Resources/config/routing.yml"
+    prefix:   /product
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

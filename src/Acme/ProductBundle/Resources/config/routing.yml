@@ -1,0 +1,6 @@
+acme_product_homepage:
+    path:     /
+    defaults: { _controller: AcmeProductBundle:Default:index }
+acme_product_create:
+    path:     /prodcreate
+    defaults: { _controller: AcmeProductBundle:Default:create }
