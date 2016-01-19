@@ -14,11 +14,36 @@ class DefaultController extends Controller
 	/**
      * @Route("/", name="product_lists")
      */
-    public function indexAction()
-    {
+    public function indexAction(Request $request)
+    {		
+		$productRepo = $this->get('doctrine_mongodb')
+         ->getManager()
+         ->createQueryBuilder('AcmeProductBundle:Product')
+         ->limit(10)
+         ->sort('price', 'ASC')
+         ->getQuery()
+		 ->execute();
+			
+		/*if($request->get('searchItem'))
+		{
+			$productRepo->field('name')->equals($request->get('searchItem'));
+		}		*/
+		//echo "<pre>";		
+		
+				/*$productLists = $productRepo->findAll();
+				$products = $repository->findBy(
+							array('name' => '')
+							);
+				*/
+		
+		if (!$productRepo) {
+			throw $this->createNotFoundException(
+				'No product found for id '.$id
+			);
+		}
 
-        return $this->render('AcmeProductBundle:Default:index.html.twig',array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..')));
+        return $this->render('AcmeProductBundle:Product:index.html.twig',array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),'product_list'=>$productRepo));
     }
 
 	public function createAction()

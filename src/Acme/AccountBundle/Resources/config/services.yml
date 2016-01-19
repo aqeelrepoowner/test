@@ -1,4 +1,9 @@
+
+parameters:
+    app.mailer.transport: sendmail
+    app.mailer.template: template
+
 services:
-#    account.example:
-#        class: Acme\AccountBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    app.mailer:
+        class:        Acme\AccountBundle\Mailer
+        arguments:    ['%app.mailer.transport%','%app.mailer.template%']

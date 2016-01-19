@@ -13,6 +13,8 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+		$mailer = $this->get('app.mailer');
+		
         return $this->render('AccountBundle:Default:index.html.twig');
     }
 	
