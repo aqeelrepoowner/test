@@ -1,19 +1,40 @@
 using System;
+using System.Drawing;
 
 namespace arrays
 {
     class Arrays
     {
-        public void getSingleDimensionalArray()
-        {   
-            int[] array1 = new int[5];
-            int[] setArr = new int[10];   
-             // Declare and set array element values
-            int[] array2 = new int[] { 1, 3, 5, 7, 9 };
+        /*Single Dimensional Arrays*/
+        public int[] setArr1D = new int[50];   
 
-            // Alternative syntax
-            int[] array3 = { 1, 2, 3, 4, 5, 6 };
+        public int[] array1 = new int[5];  
+        // Declare and set array element values
+        public int[] array2 = new int[] { 1, 3, 5, 7, 9 };
+        // Alternative syntax
+        public int[] array3 = { 1, 2, 3, 4, 5, 6 };
 
+         // Two-dimensional array.
+        public int[,] setArr2Dor3D = new int[10,1];  
+
+        public int[,] array2D = new int[,] { { 1, 2 }, { 3, 4 }, { 5, 6 }, { 7, 8 } };
+        // The same array with dimensions specified.
+        public int[,] array2Da = new int[4, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 }, { 7, 8 } };
+        // A similar array with string elements.
+        public string[,] array2Db = new string[3, 2] { { "one", "two" }, { "three", "four" },
+                                                { "five", "six" } };
+
+        // Three-dimensional array.
+        public int[, ,] array3D = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } }, 
+                                        { { 7, 8, 9 }, { 10, 11, 12 } } };
+        // The same array with dimensions specified.
+        public int[, ,] array3Da = new int[2, 3, 3] { 
+                                { { 1, 2, 3 }, { 4, 5, 6 }, { 1, 2, 3 } }, 
+                                { { 7, 8, 9 }, { 10, 11, 12 }, { 1, 2, 3 } } 
+                            };
+
+        public void printSingleDimensionalArray()
+        {  
             Console.WriteLine("Single Dimensional Array:-");
             for(int i = 0;i < array2.Length;i++)
             {   
@@ -23,12 +44,11 @@ namespace arrays
 
         public void setSingleDimensionalArray()
         {
-            int[] setArr1D = new int[50];   
             for (int i = 0;i < 50;i++)
             {
                 setArr1D[i] = i;
             }
-
+            Console.WriteLine("Single Dimensional set and get");
             for(int i = 0;i < setArr1D.Length;i++)
             {   
                 Console.WriteLine("{0}\n", setArr1D[i]);
@@ -37,8 +57,7 @@ namespace arrays
 
         public void setMultiDimensionalArray()
         {
-            int[,] setArr2Dor3D = new int[10,1];   
-            
+          
             for (int i = 0;i < 10;i++)
             {
                  for (int j = 0;j < 1;j++)
@@ -46,7 +65,7 @@ namespace arrays
                     setArr2Dor3D[i, j] = i + 100;
                  }
             }
-
+               Console.WriteLine("Multi Dimensional set and get");
             for(int i = 0;i < 10;i++)
             { 
                  for (int j = 0;j < 1;j++)
@@ -56,23 +75,9 @@ namespace arrays
             } 
         }
 
-        public void getMultiDimensionalArray()
+        public void printMultiDimensionalArray()
         {
-              // Two-dimensional array.
-            int[,] array2D = new int[,] { { 1, 2 }, { 3, 4 }, { 5, 6 }, { 7, 8 } };
-            // The same array with dimensions specified.
-            int[,] array2Da = new int[4, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 }, { 7, 8 } };
-            // A similar array with string elements.
-            string[,] array2Db = new string[3, 2] { { "one", "two" }, { "three", "four" },
-                                                    { "five", "six" } };
-
-            // Three-dimensional array.
-            int[, ,] array3D = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } }, 
-                                            { { 7, 8, 9 }, { 10, 11, 12 } } };
-            // The same array with dimensions specified.
-            int[, ,] array3Da = new int[2, 2, 3] { { { 1, 2, 3 }, { 4, 5, 6 } }, 
-                                                { { 7, 8, 9 }, { 10, 11, 12 } } };
-             Console.WriteLine("Multi 2D-3D Dimensional Array:-");                                    
+            Console.WriteLine("Multi 2D-3D Dimensional Array:-");                                    
             // Accessing array elements.
             Console.WriteLine(array2D[0, 0]);
             Console.WriteLine(array2D[0, 1]);
@@ -92,6 +97,8 @@ namespace arrays
             }
             Console.WriteLine("{0} equals {1}", allLength, total);
 
+            Console.WriteLine(array3Da[1, 0, 1]);
+
         }
     }
 
@@ -99,14 +106,87 @@ namespace arrays
    {
         static void Main(string[] args)
         {
-                   
             Arrays a = new Arrays();
-           // a.setSingleDimensionalArray();
-             a.setMultiDimensionalArray();
-            //a.getSingleDimensionalArray();
-           // a.getMultiDimensionalArray();
+           /* a.setSingleDimensionalArray();
+            a.setMultiDimensionalArray();
+            a.printSingleDimensionalArray();
+            a.printMultiDimensionalArray();*/
 
+             //Initializing and storing value in arr1
+            int[] arr1 = new int[5] { 43, 25, 33, 14, 5 };
+            int[] arr2 = new int[5];
+            int len;
+ 
+            //Check array length
+            len = arr1.Length;
+            Console.WriteLine("Length:\t{0}", len);
+ 
+            //Sorting an array
+            Array.Sort(arr1);
+            printarray(arr1);
+            /*Array.Reverse(arr1);
+            printarray(arr1);*/
+ 
+            //Returning Lenght from specified position
+            Console.WriteLine("\nGet Length:\t{0}", arr1.GetLength(0));
+ 
+            //Returns value of specified position
+            Console.WriteLine("\nGet Value:\t{0}", arr1.GetValue(2));
+ 
+            //Returns Index position of specified value
+            Console.WriteLine("\nGet Index:\t{0}", Array.IndexOf(arr1, 25));
+ 
+            //Copying arr1's items to arr2
+            Array.Copy(arr1, arr2, 5);
+            printarray(arr2);
+ 
+            //Removing items from array.
+            Array.Clear(arr1, 0, 5);
+            printarray(arr1);
+ 
+            Point[] points = { new Point(100, 200), 
+            new Point(150, 250), new Point(250, 375), 
+            new Point(275, 395), new Point(295, 450) };
+
+            // Find the first Point structure for which X times Y 
+            // is greater than 100000. 
+            Point first = Array.Find(points, ProductGT10);
+            // Display the first structure found.
+            Console.WriteLine("Found: X = {0}, Y = {1}", first.X, first.Y);
+
+            // Find the names containing any character
+            string[] names = { "akeel", "Pravin", "Suyog" };
+            string match = Array.Find(names, ContainsA);
+        
+             Console.WriteLine("\nSingle Matched name is : -{0}",match);
+            string[] matches = Array.FindAll(names, ContainsA);
+
+            Console.WriteLine("\nMulti matches are");
+            foreach(string mtch in matches) {
+                    Console.WriteLine("\nMatched name is : -{0}",mtch);
+            }
+            Console.ReadLine();
             
+        }
+
+        static bool ContainsA (string name) 
+        {
+             return name.Contains("a");      
+        }
+
+        // Return true if X times Y is greater than 100000.
+        private static bool ProductGT10(Point p)
+        {
+            return p.X * p.Y > 100000;
+        }
+
+        static void printarray(int[] arr)
+        {
+            Console.WriteLine("\nElements of array is:\n");
+            foreach (int i in arr)
+            {
+                Console.Write("\t{0}", i);
+            }
         }
    }
 
