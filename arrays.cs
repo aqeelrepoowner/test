@@ -144,27 +144,21 @@ namespace arrays
             Array.Clear(arr1, 0, 5);
             printarray(arr1);
  
-            Point[] points = { new Point(100, 200), 
-            new Point(150, 250), new Point(250, 375), 
-            new Point(275, 395), new Point(295, 450) };
-
-            // Find the first Point structure for which X times Y 
-            // is greater than 100000. 
-            Point first = Array.Find(points, ProductGT10);
-            // Display the first structure found.
-            Console.WriteLine("Found: X = {0}, Y = {1}", first.X, first.Y);
 
             // Find the names containing any character
             string[] names = { "akeel", "Pravin", "Suyog" };
             string match = Array.Find(names, ContainsA);
         
-             Console.WriteLine("\nSingle Matched name is : -{0}",match);
+            Console.WriteLine("\nSingle Matched name is : -{0}",match);
             string[] matches = Array.FindAll(names, ContainsA);
 
             Console.WriteLine("\nMulti matches are");
             foreach(string mtch in matches) {
                     Console.WriteLine("\nMatched name is : -{0}",mtch);
             }
+
+          
+
             Console.ReadLine();
             
         }
@@ -172,12 +166,6 @@ namespace arrays
         static bool ContainsA (string name) 
         {
              return name.Contains("a");      
-        }
-
-        // Return true if X times Y is greater than 100000.
-        private static bool ProductGT10(Point p)
-        {
-            return p.X * p.Y > 100000;
         }
 
         static void printarray(int[] arr)
