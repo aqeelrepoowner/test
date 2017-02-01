@@ -1,0 +1,4 @@
+[05-Dec-2016 16:40:48 UTC] PHP Notice:  Undefined index: username in C:\wamp\www\darulhuda\menu.php on line 29
+[05-Dec-2016 16:40:48 UTC] PHP Stack trace:
+[05-Dec-2016 16:40:48 UTC] PHP   1. {main}() C:\wamp\www\darulhuda\index.php:0
+[05-Dec-2016 16:40:48 UTC] PHP   2. include_once() C:\wamp\www\darulhuda\index.php:55

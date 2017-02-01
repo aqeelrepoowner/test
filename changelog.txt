@@ -1,0 +1,4 @@
+Darulhuda database changes  
+
+1) academic_year column added.
+2) Registration Date to be added in mst_studentsx`
