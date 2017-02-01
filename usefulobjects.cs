@@ -7,7 +7,8 @@ namespace OOPs
     interface IEntityManager
     {
         Connection DBConnection { get;set; }
-        List<KeyValuePair<string, object>> Entity { get; }
+       // Dictionary<KeyValuePair<string, object>> Entity { get; }
+        Dictionary<string, object> Entity { get; }
     }
 
     class Connection
@@ -15,10 +16,36 @@ namespace OOPs
         
     }
 
+    class ValidateClassesNMethods
+    {
+        public bool CheckClassesExists(string className)
+        {
+           // Console.WriteLine("Class Names:- {0}",classNames[0]);
+            //foreach (string eachClass in classNames) {
+              /* Type myType = Type.GetType(className);
+                if (myType != null) {
+                    return true;                
+                }                     
+            //}*/
+            return false;
+        }   
+
+        public bool CheckMethodExists(object className, string methodName)
+        {   
+            var type = className.GetType();
+            var method = type.GetMethod(methodName);
+            if (method != null) {
+                return true;
+            } 
+                return false;
+        }   
+    }   
+
     class EntityManager : IEntityManager
     {
-        public static List<KeyValuePair<string, object>> fetchEntities = new List<KeyValuePair<string, object>>();
+        public Dictionary<string, object> fetchEntities = new Dictionary<string, object>();
         private Connection connect;
+        protected ValidateClassesNMethods validate;
 
         public Connection DBConnection
         {
@@ -26,24 +53,25 @@ namespace OOPs
             set { connect = value; }
         }
 
-        public List<KeyValuePair<string, object>> Entity
+        public Dictionary<string, object> Entity
         {
             get { return fetchEntities; }
         }
 
-        public EntityManager(params string[] entities)
+        public void createEntities(params string[] entities)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-
+           Assembly assembly = Assembly.GetExecutingAssembly();
+            //Console.WriteLine(String.Join (", ", entities));
             foreach (string entity in entities)
             {
-                fetchEntities.Add(new KeyValuePair<string, object>(entity, assembly.CreateInstance("OOPs."+entity)));
+                     //Console.WriteLine("Entity Name:- {0}",entity);
+             ///  if (validate.CheckClassesExists("Bugs"))  {
+                    fetchEntities.Add(entity, assembly.CreateInstance("OOPs."+entity));
+              // }
                 //Console.WriteLine("each assembly object {0}",assembly.CreateInstance("OOPs."+entity));
             }
         }
     }
-
-
 
     interface IBugs
     {
@@ -110,60 +138,93 @@ namespace OOPs
         protected Bugs[] reportedBugs;
     }
 
-    class UsefulObjects
+    sealed class Configuration
     {
-        public static List<KeyValuePair<string, object>> bugs = new List<KeyValuePair<string, object>>();
+        private string[] entities = new string[] {"Bugs", "Users"};
+        private string[] handlers = new string[] {};
 
-        public static void Main(string[] args)
-        {            
-            /*bugs.Add(new KeyValuePair<string, object>("bugs", new Bugs()));
-            
-            foreach (var element in bugs)
-            {
-                Console.WriteLine(element);
-            }
-            */
-            object handler;
-            EntityManager em = new EntityManager("Bugs", "Users");
-            
-            foreach (KeyValuePair<string,object> element in em.Entity)
-            {
-                Console.WriteLine(element.Value);
-                if (element.Key == "Bugs") {
-                    handler = new BugHandler(element.Value);
-                    break;
-                } elseif(element.Key == "Users") {
-                    handler = new UsersHandler(element.Value);
-                    break;
-                }
-            }
-
-            Console.WriteLine("Handler Object :- {0}", handler);
-            
-            /*foreach(var prop in em.fetchEntities.GetType().GetProperties()) {
-                    Console.WriteLine("{0}={1}", prop.Name);
-            }*/
-           /* var y = IsNamespaceExists(namespace);
-            var x = IsClassExists(@class)? new @class : null; //Check if exists, instantiate if so.
-            var z = x.IsMethodExists(method);*/
-            
-
-           // UsefulObjects u[] = new UsefulObjects[];
-           
+        public string[] getEntities()
+        {
+            return entities;
         }
-        
+
+        public string[] getHandlers()
+        {
+            return handlers = entities;
+        }
+
     }
 
-    class BugHandler
+    class UsefulObjects
+    {
+        public static void Main(string[] args)
+        {          
+            Configuration config = new Configuration();
+            
+            object handler = new object();
+            HandlerProvider provider = new HandlerProvider();
+            provider.createHandler(config.getHandlers()); 
+            EntityManager em = new EntityManager();
+            em.createEntities(config.getEntities());
+            
+           /* foreach (KeyValuePair<string,object> element in em.Entity)
+            {
+                Console.WriteLine(element.Value);
+                Console.WriteLine(element.Key);
+                     //handler = new BugHandler((Bugs) element.Value);
+                provider.setHandler(element.Key);
+                provider.setHandlerEntity(element.Value);
+               
+            }*/
+            Console.WriteLine("Handler Object :- {0}", handler);
+        }
+    }
+
+    class HandlerProvider
+    {
+        private Dictionary<string,object> handlers = new Dictionary<string, object>();
+
+        public void createHandler(string[] handlerNames)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            foreach (string handler in handlerNames)
+            {
+                handlers.Add(handler, assembly.CreateInstance("OOPs."+handler));
+            } 
+        }
+
+        public Dictionary<string, object> getHandlers(string sKey = "")
+        {
+            try {
+             if (handlers.ContainsKey(sKey)) {
+                Console.WriteLine(handlers);
+             }
+             else {
+                throw new Exception("Wrong key provided."); 
+             }    
+            } 
+            catch(Exception e)
+            {
+                Console.WriteLine("Error Occured:- {0}", e);
+            }   
+            return handlers;
+        }
+
+        public void setEntities()
+        {
+                
+        }
+
+    }
+
+    class BugsHandler
     {
         private Bugs handlerEntity;
 
-        public BugHandler(Bugs bugEntity)
+        public BugsHandler(Bugs bugEntity)
         {
             this.handlerEntity = bugEntity;
         }
-
-
     }
 
     class UsersHandler
@@ -174,5 +235,13 @@ namespace OOPs
         {
             this.handlerEntity = userEntity;
         }
-    }   
+    }  
+
+    class Repository
+    {
+        protected string EntityName;
+        protected string repo;
+        
+
+    } 
 }
